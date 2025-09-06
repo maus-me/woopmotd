@@ -1,0 +1,10 @@
+{
+  "type": "code",
+  "modid": "woopmotd",
+  "name": "woopmotd",
+  "side": "universal",
+  "authors": [ "Mausterio" ],
+  "description": "",
+  "version": "1.0.0",
+  "dependencies": { "game": "" }
+}
