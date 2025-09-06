@@ -9,11 +9,11 @@ public class ConfigLoader : ModSystem
     private const string ConfigName = "woopmotd.json";
     public static ModConfig Config { get; private set; }
 
-    private static ICoreAPI apiRef;
+    private static ICoreAPI _apiRef;
 
     public override void StartPre(ICoreAPI api)
     {
-        apiRef = api;
+        _apiRef = api;
         LoadOrCreate(api);
     }
 
@@ -68,18 +68,18 @@ public class ConfigLoader : ModSystem
 
     public static void RequestReload()
     {
-        if (apiRef == null)
+        if (_apiRef == null)
         {
             woopmotdCore.Logger?.Warning("[woopmotd] Cannot reload config: API not initialized.");
             return;
         }
         try
         {
-            apiRef.Event.EnqueueMainThreadTask(() =>
+            _apiRef.Event.EnqueueMainThreadTask(() =>
             {
                 try
                 {
-                    LoadOrCreate(apiRef);
+                    LoadOrCreate(_apiRef);
                     woopmotdCore.Logger?.Notification("[woopmotd] Config reloaded by command.");
                 }
                 catch (Exception ex)
@@ -97,7 +97,7 @@ public class ConfigLoader : ModSystem
     public override void Dispose()
     {
         Config = null;
-        apiRef = null;
+        _apiRef = null;
         base.Dispose();
     }
 

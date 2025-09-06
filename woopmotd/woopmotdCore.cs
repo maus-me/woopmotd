@@ -46,12 +46,12 @@ public class woopmotdCore : ModSystem
             {
                 if (packet?.Vtmls == null || packet.Vtmls.Count == 0) return;
                 // Join multiple VTML messages with a blank line
-                var combined = string.Join("\n\n", packet.Vtmls);
+                var combined = string.Join("\n", packet.Vtmls);
                 if (string.IsNullOrWhiteSpace(combined)) return;
                 var dlg = new GuiMotdDialog(api, "woopmotd:motd-title", combined);
                 dlg.TryOpen();
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Logger.Error("Failed to show MOTD dialog: {0}", ex);
             }
@@ -97,7 +97,7 @@ public class woopmotdCore : ModSystem
                 if (toSend.Count == 0) return;
                 channel.SendPacket(new MotdPacket { Vtmls = toSend }, player);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Logger.Error("Failed to handle MOTD request: {0}", ex);
             }
@@ -118,34 +118,48 @@ public class woopmotdCore : ModSystem
                 if (toSend.Count == 0) return;
                 channel.SendPacket(new MotdPacket { Vtmls = toSend }, player);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Logger.Error("Failed to send MOTD: {0}", ex);
             }
         };
 
-        // Admin command: /woopmotd reload
-        api.RegisterCommand(
-            "woopmotd",
-            "WoopMOTD admin commands",
-            "/woopmotd reload",
-            (IServerPlayer caller, int groupId, CmdArgs args) =>
-            {
-                var sub = args?.PopWord()?.ToLowerInvariant();
-                if (sub == "reload")
-                {
-                    ConfigLoader.RequestReload();
-                    api.SendMessage(caller, GlobalConstants.GeneralChatGroup, "[woopmotd] Reload requested.", EnumChatType.CommandSuccess);
-                }
-                else
-                {
-                    api.SendMessage(caller, GlobalConstants.GeneralChatGroup, "Usage: /woopmotd reload", EnumChatType.CommandError);
-                }
-            },
-            "controlserver");
+        // Admin command via ChatCommands: /woopmotd reload
+        try
+        {
+            api.ChatCommands
+                .Create("motd")
+                .RequiresPrivilege(Privilege.chat)
+                .WithDescription("Show the server Message of the Day")
+                .HandleWith(Help)
+                .BeginSubCommand("help")
+                    .WithDescription("Show woopmotd command help")
+                    .RequiresPrivilege(Privilege.chat)
+                    .HandleWith(Help)
+                .EndSubCommand()
+                .BeginSubCommand("reload")
+                    .WithDescription("Reload woopmotd configuration")
+                    .RequiresPrivilege(Privilege.controlserver)
+                    .HandleWith(Reload)
+                .EndSubCommand();
+
+        }
+        catch (Exception ex)
+        {
+            Logger?.Warning("[woopmotd] Failed to register /motd via ChatCommands: {0}", ex);
+        }
     }
 
+    private TextCommandResult Reload(TextCommandCallingArgs args)
+    {
+        ConfigLoader.RequestReload();
+        return TextCommandResult.Success("[woopmotd] Reload requested.");
+    }
 
+    private TextCommandResult Help(TextCommandCallingArgs args)
+    {
+        return TextCommandResult.Success("Shift+Y - Show the server Message of the Day");
+    }
     public override void Dispose()
     {
         HarmonyInstance?.UnpatchAll(ModId);
