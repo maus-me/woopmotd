@@ -7,10 +7,12 @@ A Vintage Story (1.21+) mod that shows a rich-text (VTML) Message of the Day to 
 - Multiple MOTD sections (array) merged into one dialog
 - Shown automatically on player login
 - Client hotkey (default Shift+Y) to open MOTD any time (configurable in Controls)
-- Public command /motd to open the dialog
 - Admin command /woopmotd reload to reload config
-- Live config reload on file changes (debounced)
 - Scrollable VTML dialog with dark inset panel and localized close button
+
+## Upcoming Features
+- Live config reload on file changes (debounced)
+- Public command /motd to open the dialog
 
 ## Server Configuration
 A config file woopmotd.json is created in your mod config directory at first run. Example:
