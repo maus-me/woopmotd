@@ -1,5 +1,4 @@
 ﻿using System;
-using Cairo;
 using Vintagestory.API.Client;
 using Vintagestory.API.Config;
 
@@ -61,7 +60,7 @@ public class GuiMotdDialog : GuiDialog
         var okBtnBounds = ElementBounds.Fixed(0, 0, 100, 30).WithAlignment(EnumDialogArea.CenterBottom).WithFixedOffset(0, -10);
 
         var composer = capi.Gui.CreateCompo("woopmotd:motd", dialogBounds)
-            .AddDialogBG(bgBounds, true)
+            .AddDialogBG(bgBounds)
             .AddDialogTitleBar(_title, OnTitleBarClose)
             .BeginChildElements(bgBounds)
                 // Inset border and darkened background behind the text viewport
