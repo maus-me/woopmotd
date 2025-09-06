@@ -2,6 +2,8 @@
 
 A Vintage Story (1.21+) mod that shows a rich-text (VTML) Message of the Day to players. Works similar to GMod or Counterstrike MOTD menus.  The server controls the content and can push updates to clients on login, on demand via a command, or when players press a hotkey.
 
+### Designed for the [WoopLand](vintagestoryjoin://) Vintage Story Server.  Join us at [discord.gg](https://discord.woopland.com).
+
 ## Features
 - Server-configured MOTD using VTML (supports bold, colors, line breaks, etc.)
 - Multiple MOTD sections (array) merged into one dialog
