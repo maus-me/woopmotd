@@ -16,6 +16,12 @@ A Vintage Story (1.21+) mod that shows a rich-text (VTML) Message of the Day to 
 - Live config reload on file changes (debounced)
 - Public command /motd to open the dialog
 
+## Known Issues & Limitations
+- `a href` Links will have text cropped off the bottom unless they are wrapped in a `<font lineheight=1>`. This is due to the way VTML has far too much padding between lines by default this mod attempts to address the padding issue by using a lineheight of 0.8.
+- The VTML parser is very fragile.  Invalid VTML can cause the dialog to not render or crash the game.  We attempt to handle this by gracefully failing and having the server fallback to default values. Test your VTML in a singleplayer world before deploying to a server.
+- Links can not be colored.  This is a VTML limitation.
+- Icon sizing is inconsistent.  This is a VTML limitation.
+
 ## Server Configuration
 A config file woopmotd.json is created in your mod config directory at first run. Example:
 ```
@@ -49,4 +55,7 @@ A config file woopmotd.json is created in your mod config directory at first run
 - No MOTD shown: Check that EnableMotd is true and that MotdVtmls contains at least one non-empty string.
 
 ### License
-- See the repository’s license file if present. Otherwise, all rights reserved by the author(s).
+This project is licensed under the GNU Affero General Public License v3.0 (AGPL-3.0).
+
+- Full text: see the [LICENSE](LICENSE) file in this repository.
+- Summary: You may use, modify, and redistribute this software under the AGPL-3.0 terms. If you run a modified version as a network service, you must make the source code of your modifications available to users interacting with that service.
