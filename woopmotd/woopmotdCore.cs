@@ -124,7 +124,7 @@ public class woopmotdCore : ModSystem
             }
         };
 
-        // Admin command via ChatCommands: /woopmotd reload
+        // Admin command via ChatCommands: /motd reload
         try
         {
             api.ChatCommands
@@ -158,7 +158,7 @@ public class woopmotdCore : ModSystem
 
     private TextCommandResult Help(TextCommandCallingArgs args)
     {
-        return TextCommandResult.Success("Shift+Y - Show the server Message of the Day");
+        return TextCommandResult.Success("Shift+Y - Show the server Message of the Day\n/motd reload - Reload woopMOTD configuration");
     }
     public override void Dispose()
     {

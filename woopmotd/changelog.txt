@@ -1,2 +1,5 @@
-v1.0.0 Changelog
+v1.0.4 Changelog
+- Adjust help message
+- Add /motd reload command
+v1.0.3 Changelog
 - Initial release
